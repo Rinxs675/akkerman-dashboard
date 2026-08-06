@@ -42,7 +42,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       background: 'linear-gradient(135deg, #E6ECF5 0%, #EFF4FA 100%)',
       display: 'flex',
       flexDirection: 'column',
-      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+      fontFamily: "'Inter', 'Segoe UI', sans-serif",
       padding: 'clamp(56px, 7.5vh, 80px) 3vw 1.5vh 3vw',
       boxSizing: 'border-box',
       overflow: 'hidden',
@@ -75,12 +75,12 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           flex: 1,
           fontSize: 'clamp(1.8rem, 3vw, 3rem)',
           fontWeight: 900,
-          color: '#111827',
+          color: '#1E293B',
           textAlign: 'center',
           lineHeight: 1.1,
           margin: 0,
           letterSpacing: '1px',
-          fontFamily: "'Inter', system-ui, sans-serif",
+          fontFamily: "'Inter', 'Segoe UI', sans-serif",
         }}>
           СТАТИСТИКА ПРОИСШЕСТВИЙ
         </h1>
@@ -93,7 +93,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           textAlign: 'right',
           flexShrink: 0,
           minWidth: '180px',
-          fontFamily: "'Inter', system-ui, sans-serif",
+          fontFamily: "'Inter', 'Segoe UI', sans-serif",
         }}>
           {displayDate}
         </div>
@@ -207,7 +207,7 @@ const cardTitleStyle = {
   margin: '0 0 8px 0',
   textAlign: 'center',
   letterSpacing: '0.3px',
-  fontFamily: "'Inter', system-ui, sans-serif",
+  fontFamily: "'Inter', 'Segoe UI', sans-serif",
   flexShrink: 0,
 };
 

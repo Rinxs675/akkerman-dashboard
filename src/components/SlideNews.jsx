@@ -67,7 +67,7 @@ export default function SlideNews({ news = [], reportDate }) {
           flex: 1,
           fontSize: 'clamp(1.8rem, 3.2vw, 3rem)',
           fontWeight: 800,
-          color: '#1A2B48',
+          color: '#1E293B',
           textAlign: 'center',
           lineHeight: 1.15,
         }}>
@@ -76,7 +76,7 @@ export default function SlideNews({ news = [], reportDate }) {
         <span style={{
           fontSize: 'clamp(1.1rem, 1.6vw, 1.5rem)',
           fontWeight: 600,
-          color: '#475569',
+          color: '#1E293B',
           minWidth: '220px',
           textAlign: 'right',
           flexShrink: 0,

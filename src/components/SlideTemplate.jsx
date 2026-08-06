@@ -43,7 +43,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
           flex: 1,
           fontSize: 'clamp(1.4rem, 2.5vw, 2.5rem)',
           fontWeight: 800,
-          color: '#1A2B48',
+          color: '#1E293B',
           textAlign: 'center',
           lineHeight: 1.15,
         }}>
@@ -52,7 +52,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
         <span style={{
           fontSize: 'clamp(0.9rem, 1.3vw, 1.3rem)',
           fontWeight: 600,
-          color: '#475569',
+          color: '#1E293B',
           minWidth: '180px',
           textAlign: 'right',
           flexShrink: 0,
