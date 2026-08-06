@@ -129,10 +129,10 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           <div style={stripeStyle} />
         </div>
 
-        {/* ── Column 2: СТАТИСТИКА ПРОИСШЕСТВИЙ ── */}
+        {/* ── Column 2: НЕСЧАСТНЫЕ СЛУЧАИ ── */}
         <div style={cardStyle}>
           <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
-            <h2 style={cardTitleStyle}>СТАТИСТИКА ПРОИСШЕСТВИЙ</h2>
+            <h2 style={cardTitleStyle}>НЕСЧАСТНЫЕ СЛУЧАИ</h2>
 
             {/* Dark Blue Count Badge */}
             <div style={darkBlueBadgeStyle}>
@@ -142,7 +142,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
 
             {/* Full Image Container */}
             <div style={imageBoxStyle}>
-              <img src={imgAccident} alt="Статистика происшествий" style={imageStyle} />
+              <img src={imgAccident} alt="Несчастные случаи" style={imageStyle} />
             </div>
           </div>
 
