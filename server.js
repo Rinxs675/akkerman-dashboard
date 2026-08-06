@@ -221,23 +221,25 @@ app.get('/api/incidents', async (req, res) => {
 // Upload incident notification image
 app.post('/api/incidents', uploadIncident.single('image'), async (req, res) => {
   try {
-    const { title, number, category, date_str, location, description } = req.body;
+    const { title, number, category, date_str, location, description, count } = req.body;
     if (!req.file) {
       return res.status(400).json({ error: 'No image uploaded' });
     }
 
     const imagePath = `/uploads/incidents/${req.file.filename}`;
+    const incidentCount = count ? parseInt(count, 10) : 1;
 
     const result = await dbRun(
-      `INSERT INTO incidents (title, number, category, date_str, location, description, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO incidents (title, number, category, date_str, location, description, image_path, count) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        title || 'Уведомление о происшествии',
+        title || category || 'Уведомление о происшествии',
         number || '',
         category || 'Происшествие',
         date_str || new Date().toLocaleString('ru-RU'),
         location || 'Объект предприятия',
         description || '',
-        imagePath
+        imagePath,
+        incidentCount
       ]
     );
 

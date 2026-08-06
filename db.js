@@ -150,6 +150,7 @@ function handleJsonRun(sql, params = []) {
       location: params[4] || '',
       description: params[5] || '',
       image_path: params[6] || '',
+      count: params[7] !== undefined ? Number(params[7]) : 1,
       created_at: new Date().toISOString()
     };
     jsonStore.incidents.unshift(newObj);
@@ -249,6 +250,7 @@ export async function initDatabase() {
       location TEXT,
       description TEXT,
       image_path TEXT NOT NULL,
+      count INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -270,22 +272,22 @@ export async function initDatabase() {
   if (!incidentCount || incidentCount.count === 0) {
     console.log('[Database] Seeding sample incident notifications...');
     await dbRun(`
-      INSERT INTO incidents (title, number, category, date_str, location, description, image_path)
+      INSERT INTO incidents (title, number, category, date_str, location, description, image_path, count)
       VALUES 
       (
-        'ДТП с автоцементовозом', '7', 'Дорожно-транспортное происшествие', '09.07.2026 04:49',
-        'Поселок Авангард', 'Касательное столкновение цементовоза с транспортным средством другого участника движения.',
-        '/samples/incident_7.svg'
+        'Микротравмы', '7', 'Микротравмы', '09.07.2026 04:49',
+        'Поселок Авангард', 'Касательное столкновение.',
+        '/samples/incident_7.svg', 5
       ),
       (
-        'Спуск с лестницы цистерны', '4', 'Несчастный случай', '20.06.2026 03:30',
-        'Территория заказчика г. Ангрен', 'При спуске с цистерны автоцементовоза водитель потерял равновесие и получил травму руки.',
-        '/samples/incident_4_fall.svg'
+        'Статистика происшествий', '4', 'Несчастные случаи', '20.06.2026 03:30',
+        'Территория заказчика г. Ангрен', 'При спуске с цистерны автоцементовоза.',
+        '/samples/incident_4_fall.svg', 8
       ),
       (
-        'Столкновение на перекрестке', '4', 'Дорожно-транспортное происшествие', '19.03.2026 15:10',
-        'г. Ахангаран', 'Нарушение приоритета проезда перекрестка неравнозначных дорог.',
-        '/samples/incident_7.svg'
+        'ДТП, происшествия, инциденты', '4', 'ДТП, происшествия, инциденты', '19.03.2026 15:10',
+        'г. Ахангаран', 'Столкновение на перекрестке.',
+        '/samples/incident_7.svg', 12
       )
     `);
   }

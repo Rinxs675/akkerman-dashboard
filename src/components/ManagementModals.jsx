@@ -135,6 +135,7 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
   const [incidents, setIncidents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('ДТП, происшествия, инциденты');
+  const [count, setCount] = useState('1');
   const [title, setTitle] = useState('');
   const [file, setFile] = useState(null);
 
@@ -161,13 +162,14 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('category', category);
+    formData.append('count', count || '1');
     formData.append('title', title || category);
     formData.append('date_str', new Date().toLocaleString('ru-RU'));
 
     try {
       const res = await fetch('/api/incidents', { method: 'POST', body: formData });
       if (res.ok) {
-        setTitle(''); setFile(null);
+        setTitle(''); setFile(null); setCount('1');
         await fetchIncidents();
         onRefresh && onRefresh();
       }
@@ -207,21 +209,36 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
               <Plus size={18} color="#10B981" /> Добавить новую картинку
             </h3>
             
-            <div style={{ marginBottom: '16px' }}>
-              <label style={{ ...labelStyle, fontSize: '0.85rem', fontWeight: 700, color: '#E2E8F0' }}>1. Выберите категорию происшествия:</label>
-              <select 
-                style={{ ...inputStyle, padding: '10px 14px', fontSize: '0.95rem', fontWeight: 700, color: '#38BDF8', background: '#0F172A' }} 
-                value={category} 
-                onChange={e => setCategory(e.target.value)}
-              >
-                <option value="Микротравмы">Микротравмы</option>
-                <option value="ДТП, происшествия, инциденты">ДТП, происшествия, инциденты</option>
-                <option value="Несчастные случаи">Несчастные случаи</option>
-              </select>
+            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '12px', marginBottom: '16px' }}>
+              <div>
+                <label style={{ ...labelStyle, fontSize: '0.85rem', fontWeight: 700, color: '#E2E8F0' }}>1. Выберите категорию:</label>
+                <select 
+                  style={{ ...inputStyle, padding: '10px 14px', fontSize: '0.95rem', fontWeight: 700, color: '#38BDF8', background: '#0F172A' }} 
+                  value={category} 
+                  onChange={e => setCategory(e.target.value)}
+                >
+                  <option value="Микротравмы">Микротравмы</option>
+                  <option value="ДТП, происшествия, инциденты">ДТП, происшествия, инциденты</option>
+                  <option value="Несчастные случаи">Несчастные случаи</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ ...labelStyle, fontSize: '0.85rem', fontWeight: 700, color: '#E2E8F0' }}>2. Кол-во происшествий:</label>
+                <input 
+                  type="number" 
+                  min="0" 
+                  max="999" 
+                  style={{ ...inputStyle, padding: '10px 14px', fontSize: '0.95rem', fontWeight: 800, color: '#EF4444', textAlign: 'center', background: '#0F172A' }} 
+                  value={count} 
+                  onChange={e => setCount(e.target.value)} 
+                  required 
+                />
+              </div>
             </div>
 
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ ...labelStyle, fontSize: '0.85rem', fontWeight: 700, color: '#E2E8F0' }}>2. Выберите картинку (PNG, JPG, SVG):</label>
+              <label style={{ ...labelStyle, fontSize: '0.85rem', fontWeight: 700, color: '#E2E8F0' }}>3. Выберите картинку (PNG, JPG, SVG):</label>
               <input 
                 type="file" 
                 accept="image/*" 
