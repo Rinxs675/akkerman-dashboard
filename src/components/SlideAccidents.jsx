@@ -39,7 +39,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
     <div style={{
       width: '100%',
       height: '100%',
-      background: 'linear-gradient(135deg, #E6ECF5 0%, #EFF4FA 100%)',
+      background: 'linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E293B 100%)',
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
@@ -64,7 +64,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           padding: '6px 18px',
           borderRadius: '12px',
           letterSpacing: '0.5px',
-          boxShadow: '0 4px 12px rgba(229, 57, 53, 0.3)',
+          boxShadow: '0 4px 12px rgba(229, 57, 53, 0.4)',
           flexShrink: 0,
         }}>
           УОТэиПБ
@@ -75,12 +75,13 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           flex: 1,
           fontSize: 'clamp(1.8rem, 3vw, 3rem)',
           fontWeight: 900,
-          color: '#111827',
+          color: '#FFFFFF',
           textAlign: 'center',
           lineHeight: 1.1,
           margin: 0,
           letterSpacing: '1px',
           fontFamily: "'Inter', system-ui, sans-serif",
+          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
         }}>
           СТАТИСТИКА ПРОИСШЕСТВИЙ
         </h1>
@@ -89,7 +90,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
         <div style={{
           fontSize: 'clamp(1rem, 1.4vw, 1.4rem)',
           fontWeight: 700,
-          color: '#1E293B',
+          color: '#CBD5E1',
           textAlign: 'right',
           flexShrink: 0,
           minWidth: '180px',
@@ -176,7 +177,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       <div style={{
         textAlign: 'center',
         fontSize: '0.8rem',
-        color: '#64748B',
+        color: '#94A3B8',
         fontWeight: 600,
         marginTop: '1vh',
         flexShrink: 0,
