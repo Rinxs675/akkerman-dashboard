@@ -39,7 +39,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
     <div style={{
       width: '100%',
       height: '100%',
-      background: 'linear-gradient(135deg, #0B1120 0%, #0F172A 50%, #1E293B 100%)',
+      background: 'linear-gradient(135deg, #E6ECF5 0%, #EFF4FA 100%)',
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
@@ -55,16 +55,16 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
         marginBottom: '1.5vh',
         flexShrink: 0,
       }}>
-        {/* Red Left Pill */}
+        {/* Dark Blue Left Pill */}
         <div style={{
-          background: '#E53935',
+          background: '#1E293B',
           color: '#FFFFFF',
           fontSize: 'clamp(1rem, 1.4vw, 1.4rem)',
           fontWeight: 900,
           padding: '6px 18px',
           borderRadius: '12px',
           letterSpacing: '0.5px',
-          boxShadow: '0 4px 12px rgba(229, 57, 53, 0.4)',
+          boxShadow: '0 4px 12px rgba(30, 41, 59, 0.25)',
           flexShrink: 0,
         }}>
           УОТэиПБ
@@ -75,13 +75,12 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           flex: 1,
           fontSize: 'clamp(1.8rem, 3vw, 3rem)',
           fontWeight: 900,
-          color: '#FFFFFF',
+          color: '#111827',
           textAlign: 'center',
           lineHeight: 1.1,
           margin: 0,
           letterSpacing: '1px',
           fontFamily: "'Inter', system-ui, sans-serif",
-          textShadow: '0 2px 10px rgba(0,0,0,0.5)',
         }}>
           СТАТИСТИКА ПРОИСШЕСТВИЙ
         </h1>
@@ -90,7 +89,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
         <div style={{
           fontSize: 'clamp(1rem, 1.4vw, 1.4rem)',
           fontWeight: 700,
-          color: '#CBD5E1',
+          color: '#1E293B',
           textAlign: 'right',
           flexShrink: 0,
           minWidth: '180px',
@@ -114,8 +113,8 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>МИКРОТРАВМЫ</h2>
 
-            {/* Red Count Badge */}
-            <div style={redBadgeStyle}>
+            {/* Dark Blue Count Badge */}
+            <div style={darkBlueBadgeStyle}>
               <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countMicro}</span>
               <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
@@ -126,7 +125,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
             </div>
           </div>
 
-          {/* Bottom Red-White Hazard Stripe */}
+          {/* Bottom Dark Blue-White Hazard Stripe */}
           <div style={stripeStyle} />
         </div>
 
@@ -135,8 +134,8 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>СТАТИСТИКА ПРОИСШЕСТВИЙ</h2>
 
-            {/* Red Count Badge */}
-            <div style={redBadgeStyle}>
+            {/* Dark Blue Count Badge */}
+            <div style={darkBlueBadgeStyle}>
               <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countAccident}</span>
               <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
@@ -147,7 +146,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
             </div>
           </div>
 
-          {/* Bottom Red-White Hazard Stripe */}
+          {/* Bottom Dark Blue-White Hazard Stripe */}
           <div style={stripeStyle} />
         </div>
 
@@ -156,8 +155,8 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
           <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>ДТП, ПРОИСШЕСТВИЯ, ИНЦИДЕНТЫ</h2>
 
-            {/* Red Count Badge */}
-            <div style={redBadgeStyle}>
+            {/* Dark Blue Count Badge */}
+            <div style={darkBlueBadgeStyle}>
               <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countDtp}</span>
               <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
@@ -168,7 +167,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
             </div>
           </div>
 
-          {/* Bottom Red-White Hazard Stripe */}
+          {/* Bottom Dark Blue-White Hazard Stripe */}
           <div style={stripeStyle} />
         </div>
       </div>
@@ -177,7 +176,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       <div style={{
         textAlign: 'center',
         fontSize: '0.8rem',
-        color: '#94A3B8',
+        color: '#64748B',
         fontWeight: 600,
         marginTop: '1vh',
         flexShrink: 0,
@@ -212,8 +211,8 @@ const cardTitleStyle = {
   flexShrink: 0,
 };
 
-const redBadgeStyle = {
-  background: '#E53935',
+const darkBlueBadgeStyle = {
+  background: '#1E293B',
   color: '#FFFFFF',
   borderRadius: '12px',
   padding: '6px 10px',
@@ -222,7 +221,7 @@ const redBadgeStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: '10px',
-  boxShadow: '0 4px 12px rgba(229, 57, 53, 0.25)',
+  boxShadow: '0 4px 12px rgba(30, 41, 59, 0.25)',
   flexShrink: 0,
 };
 
@@ -255,5 +254,5 @@ const stripeStyle = {
   height: '12px',
   width: '100%',
   flexShrink: 0,
-  background: 'repeating-linear-gradient(-45deg, #DC2626, #DC2626 12px, #FFFFFF 12px, #FFFFFF 24px)',
+  background: 'repeating-linear-gradient(-45deg, #1E293B, #1E293B 12px, #FFFFFF 12px, #FFFFFF 24px)',
 };
