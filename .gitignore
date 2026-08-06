@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+database.sqlite
+uploads/excel/*
+!uploads/excel/.gitkeep
+uploads/incidents/*
+!uploads/incidents/.gitkeep
+uploads/news/*
+!uploads/news/.gitkeep

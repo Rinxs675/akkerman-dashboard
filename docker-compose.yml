@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  akkermann-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: akkermann-dashboard
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - dashboard_uploads:/app/uploads
+    environment:
+      - PORT=3001
+
+volumes:
+  dashboard_uploads:
+    driver: local

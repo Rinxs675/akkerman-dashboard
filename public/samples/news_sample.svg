@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" style="background:linear-gradient(135deg, #0F172A 0%, #1E293B 100%); font-family:'Segoe UI', sans-serif;">
+  <rect width="1200" height="675" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+  <circle cx="1000" cy="150" r="250" fill="#10B981" opacity="0.1" />
+  <circle cx="200" cy="500" r="300" fill="#06B6D4" opacity="0.1" />
+  
+  <g transform="translate(80, 100)">
+    <rect x="0" y="0" width="180" height="36" fill="#10B981" rx="18"/>
+    <text x="90" y="24" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">НОВОСТИ КОМПАНИИ</text>
+    
+    <text x="0" y="110" font-size="44" font-weight="900" fill="#F8FAFC">Инструктажи по безопасности и ПДД</text>
+    <text x="0" y="160" font-size="22" font-weight="500" fill="#94A3B8">Контроль соблюдения правил дорожного движения и охраны труда</text>
+    
+    <rect x="0" y="220" width="1040" height="2" fill="rgba(255,255,255,0.1)" />
+    
+    <g transform="translate(0, 260)">
+      <rect x="0" y="0" width="480" height="200" fill="rgba(30, 41, 59, 0.7)" rx="16" stroke="rgba(255,255,255,0.1)"/>
+      <text x="30" y="50" font-size="20" font-weight="800" fill="#38BDF8">🎯 Основные цели</text>
+      <text x="30" y="90" font-size="16" fill="#CBD5E1">• Проведение сменно-встречных собраний</text>
+      <text x="30" y="125" font-size="16" fill="#CBD5E1">• Проверка технического состояния техники</text>
+      <text x="30" y="160" font-size="16" fill="#CBD5E1">• Мониторинг скоростного режима автоцементовозов</text>
+    </g>
+
+    <g transform="translate(520, 260)">
+      <rect x="0" y="0" width="520" height="200" fill="rgba(30, 41, 59, 0.7)" rx="16" stroke="rgba(255,255,255,0.1)"/>
+      <text x="30" y="50" font-size="20" font-weight="800" fill="#34D399">🛡️ Культура безопасности AKKERMANN</text>
+      <text x="30" y="95" font-size="16" fill="#CBD5E1">Каждый сотрудник несет ответственность за безопасность</text>
+      <text x="30" y="125" font-size="16" fill="#CBD5E1">на своем рабочем месте и на дорогах общего пользования.</text>
+      <text x="30" y="165" font-size="14" font-weight="700" fill="#FBBF24">«Ноль несчастных случаев — наша главная цель!»</text>
+    </g>
+  </g>
+</svg>

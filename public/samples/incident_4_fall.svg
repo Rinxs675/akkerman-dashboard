@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="800" height="1100" style="background:#ffffff; font-family:'Segoe UI', sans-serif;">
+  <text x="30" y="45" font-size="32" font-weight="900" fill="#0A2540">AKHANGARAN</text>
+  <text x="30" y="70" font-size="18" font-weight="700" fill="#1E293B">ООО «Ахангаранцемент»</text>
+  <text x="360" y="45" font-size="22" font-weight="800" fill="#DC2626">Уведомление № 4 о Несчастном случае</text>
+
+  <rect x="20" y="110" width="760" height="40" fill="#FEF3C7" rx="4"/>
+  <text x="400" y="135" font-size="15" font-weight="800" fill="#92400E" text-anchor="middle">Данная информация обращает ваше внимание на недавно произошедшее происшествие</text>
+
+  <g transform="translate(20, 165)" font-size="15">
+    <rect x="0" y="0" width="760" height="150" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+    <line x1="200" y1="0" x2="200" y2="150" stroke="#CBD5E1" stroke-width="1.5"/>
+    <line x1="0" y1="35" x2="760" y2="35" stroke="#CBD5E1" stroke-width="1"/>
+    <line x1="0" y1="70" x2="760" y2="70" stroke="#CBD5E1" stroke-width="1"/>
+    <line x1="0" y1="105" x2="760" y2="105" stroke="#CBD5E1" stroke-width="1"/>
+    
+    <text x="100" y="24" font-weight="700" text-anchor="middle">СП</text>
+    <text x="220" y="24" font-weight="600">Цех автотранспорта</text>
+    <text x="100" y="59" font-weight="700" text-anchor="middle">Место происшествия</text>
+    <text x="220" y="59" font-weight="600">Территория заказчика в г. Ангрен</text>
+    <text x="100" y="94" font-weight="700" text-anchor="middle">Категория</text>
+    <text x="220" y="94" font-weight="700" fill="#D97706">Несчастный случай</text>
+    <text x="100" y="132" font-weight="700" text-anchor="middle">Дата/время</text>
+    <text x="220" y="132" font-weight="600">20.06.2026 г., около 03:30 ч.</text>
+  </g>
+
+  <g transform="translate(20, 330)">
+    <rect x="0" y="0" width="760" height="130" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect x="0" y="0" width="200" height="130" fill="#FEF3C7"/>
+    <text x="100" y="65" font-size="16" font-weight="800" fill="#92400E" text-anchor="middle">Реализованный РИСК</text>
+
+    <rect x="210" y="10" width="170" height="110" fill="#E0F2FE" stroke="#0284C7" stroke-width="1" rx="4"/>
+    <text x="295" y="32" font-size="14" font-weight="800" text-anchor="middle" fill="#0369A1">Условие</text>
+    <text x="295" y="60" font-size="12" font-weight="600" text-anchor="middle" fill="#0C4A6E">Доставка цемента</text>
+
+    <rect x="395" y="10" width="170" height="110" fill="#E0F2FE" stroke="#0284C7" stroke-width="1" rx="4"/>
+    <text x="480" y="32" font-size="14" font-weight="800" text-anchor="middle" fill="#0369A1">Событие</text>
+    <text x="480" y="60" font-size="12" font-weight="600" text-anchor="middle" fill="#0C4A6E">Спуск с лестницы</text>
+    <text x="480" y="78" font-size="12" font-weight="600" text-anchor="middle" fill="#0C4A6E">цистерны</text>
+
+    <rect x="580" y="10" width="170" height="110" fill="#E0F2FE" stroke="#0284C7" stroke-width="1" rx="4"/>
+    <text x="665" y="32" font-size="14" font-weight="800" text-anchor="middle" fill="#0369A1">Последствие</text>
+    <text x="665" y="65" font-size="12" font-weight="600" text-anchor="middle" fill="#0C4A6E">Получение травмы</text>
+  </g>
+
+  <g transform="translate(20, 475)">
+    <rect x="0" y="0" width="760" height="420" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+    <rect x="0" y="0" width="200" height="420" fill="#F1F5F9"/>
+    <text x="100" y="210" font-size="16" font-weight="800" fill="#1E293B" text-anchor="middle">Что произошло</text>
+
+    <foreignObject x="215" y="15" width="530" height="390">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px; line-height:1.5; color:#1E293B;">
+        <p style="margin-top:0;"><strong>20.06.2026 года примерно в 03:30</strong> водитель цементовоза при спуске с цистерны транспортного средства потерял равновесие и упал на площадку.</p>
+        <p>В результате падения работник получил травму руки и был доставлен в медицинское учреждение для оказания помощи.</p>
+        <div style="height:220px; background:#1E293B; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#10B981; font-weight:700; margin-top:20px;">
+          Иллюстрация инцидента и бланка осмотра
+        </div>
+      </div>
+    </foreignObject>
+  </g>
+</svg>
