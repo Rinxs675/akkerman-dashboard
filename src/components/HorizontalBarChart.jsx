@@ -28,7 +28,7 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
         fontSize: 'clamp(0.85rem, 1.1vw, 1.15rem)',
         fontWeight: 800,
         color: '#1E293B',
-        marginLeft: '129px',
+        marginLeft: '154px',
         marginBottom: '0.5vh',
       }}>
         {title}
@@ -46,7 +46,7 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
         {/* ── Row 1: План ── */}
         <div style={{ display: 'flex', alignItems: 'center', height: '32%', width: '100%' }}>
           <div style={{
-            width: '115px',
+            width: '140px',
             textAlign: 'right',
             paddingRight: '14px',
             fontSize: 'clamp(0.85rem, 1.1vw, 1.1rem)',
@@ -91,7 +91,7 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
         {/* ── Row 2: Факт ── */}
         <div style={{ display: 'flex', alignItems: 'center', height: '32%', width: '100%' }}>
           <div style={{
-            width: '115px',
+            width: '140px',
             textAlign: 'right',
             paddingRight: '14px',
             fontSize: 'clamp(0.85rem, 1.1vw, 1.1rem)',
@@ -136,7 +136,7 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
         {/* ── Row 3: Отклонение ── */}
         <div style={{ display: 'flex', alignItems: 'center', height: '32%', width: '100%' }}>
           <div style={{
-            width: '115px',
+            width: '140px',
             textAlign: 'right',
             paddingRight: '14px',
             fontSize: 'clamp(0.85rem, 1.1vw, 1.1rem)',
