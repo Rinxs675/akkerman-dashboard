@@ -1,232 +1,242 @@
-import React, { useState } from 'react';
-import { Maximize2, X, AlertCircle } from 'lucide-react';
+import React from 'react';
 
-export default function SlideAccidents({ incidents = [], reportDate }) {
-  const [fullImage, setFullImage] = useState(null);
+export default function SlideAccidents({ data, incidents = [], reportDate }) {
+  // Extract or calculate stats counts
+  const safetyStats = data?.safety || { microTraumas: 5, incidents: 8, accidents: 12 };
 
-  const categories = [
-    { id: 'ALL', name: 'Все', color: '#1E293B', bg: '#E2E8F0' },
-    { id: 'micro', name: 'Микротравмы', color: '#B45309', bg: '#FEF3C7' },
-    { id: 'dtp', name: 'ДТП, происшествия, инциденты', color: '#0369A1', bg: '#E0F2FE' },
-    { id: 'accident', name: 'Несчастные случаи', color: '#B91C1C', bg: '#FEE2E2' },
-  ];
+  // Filter incidents for each category
+  const microIncidents = incidents.filter(i => (i.category || '').toLowerCase().includes('микро'));
+  const accidentIncidents = incidents.filter(i => {
+    const c = (i.category || '').toLowerCase();
+    return c.includes('несчастн') || c.includes('происшестви') || c.includes('статистик');
+  });
+  const dtpIncidents = incidents.filter(i => {
+    const c = (i.category || '').toLowerCase();
+    return c.includes('дтп') || c.includes('инцидент');
+  });
 
-  // Helper to check item category
-  const getItemCatObj = (inc) => {
-    const text = (inc.category || '').toLowerCase();
-    if (text.includes('микро')) return categories[1];
-    if (text.includes('несчастн') || text.includes('травм')) return categories[3];
-    return categories[2];
-  };
+  // Determine displayed image for each card
+  const imgMicro = microIncidents[0]?.image_path || '/samples/incident_7.svg';
+  const imgAccident = accidentIncidents[0]?.image_path || incidents[1]?.image_path || '/samples/incident_4_fall.svg';
+  const imgDtp = dtpIncidents[0]?.image_path || incidents[2]?.image_path || '/samples/incident_7.svg';
 
-  const count = incidents.length;
-  let gridColumns = '1fr';
-  if (count === 2) gridColumns = '1fr 1fr';
-  else if (count === 3) gridColumns = '1fr 1fr 1fr';
-  else if (count >= 4) gridColumns = 'repeat(auto-fit, minmax(280px, 1fr))';
+  const countMicro = microIncidents.length > 0 ? microIncidents.length : (safetyStats.microTraumas || 5);
+  const countAccident = accidentIncidents.length > 0 ? accidentIncidents.length : (safetyStats.incidents || 8);
+  const countDtp = dtpIncidents.length > 0 ? dtpIncidents.length : (safetyStats.accidents || 12);
+
+  const displayDate = reportDate || '05 августа 2026 г.';
 
   return (
     <div style={{
       width: '100%',
       height: '100%',
-      background: 'linear-gradient(135deg, #DCE2EC 0%, #E2E8F0 50%, #D1D8E6 100%)',
+      background: 'linear-gradient(135deg, #E6ECF5 0%, #EFF4FA 100%)',
       display: 'flex',
       flexDirection: 'column',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      padding: '3vh 4vw 3vh 4vw',
+      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+      padding: '2.5vh 3.5vw',
       boxSizing: 'border-box',
       overflow: 'hidden',
     }}>
-      {/* ── Header (Identical to Slide 1, 2, 3) ── */}
+      {/* ── Header ── */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: '2vh',
         flexShrink: 0,
       }}>
-        <span style={{
-          fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
+        {/* Red Left Pill */}
+        <div style={{
+          background: '#E53935',
+          color: '#FFFFFF',
+          fontSize: 'clamp(1.1rem, 1.6vw, 1.5rem)',
           fontWeight: 900,
-          color: '#1E293B',
-          minWidth: '110px',
+          padding: '6px 20px',
+          borderRadius: '12px',
+          letterSpacing: '0.5px',
+          boxShadow: '0 4px 12px rgba(229, 57, 53, 0.3)',
           flexShrink: 0,
         }}>
-          ОТ и ПБ
-        </span>
-        <span style={{
+          УОТэиПБ
+        </div>
+
+        {/* Center Main Title */}
+        <h1 style={{
           flex: 1,
-          fontSize: 'clamp(1.8rem, 3.2vw, 3rem)',
-          fontWeight: 800,
-          color: '#1A2B48',
+          fontSize: 'clamp(2rem, 3.2vw, 3.2rem)',
+          fontWeight: 900,
+          color: '#111827',
           textAlign: 'center',
-          lineHeight: 1.15,
+          lineHeight: 1.1,
+          margin: 0,
+          letterSpacing: '1px',
+          fontFamily: "'Inter', system-ui, sans-serif",
         }}>
-          ПРОИСШЕСТВИЯ И НЕСЧАСТНЫЕ СЛУЧАИ
-        </span>
-        <span style={{
+          СТАТИСТИКА ПРОИСШЕСТВИЙ
+        </h1>
+
+        {/* Right Date */}
+        <div style={{
           fontSize: 'clamp(1.1rem, 1.6vw, 1.5rem)',
-          fontWeight: 600,
-          color: '#475569',
-          minWidth: '220px',
+          fontWeight: 700,
+          color: '#1E293B',
           textAlign: 'right',
           flexShrink: 0,
+          minWidth: '200px',
+          fontFamily: "'Inter', system-ui, sans-serif",
         }}>
-          {reportDate || new Date().toLocaleDateString('ru-RU')}
-        </span>
+          {displayDate}
+        </div>
       </div>
 
-      {/* ── Body ── */}
+      {/* ── 3 Column Cards Body ── */}
       <div style={{
         flex: 1,
-        display: 'flex',
-        gap: '3vw',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '2vw',
         minHeight: 0,
         overflow: 'hidden',
       }}>
-        {/* Main Content Column: Grid displaying ALL uploaded images */}
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: 0,
-          overflow: 'hidden',
-        }}>
-          {!incidents || incidents.length === 0 ? (
-            <div style={{
-              flex: 1, background: 'rgba(255,255,255,0.45)', borderRadius: '16px',
-              border: '1px solid rgba(255,255,255,0.6)', display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center', color: '#64748B'
-            }}>
-              <AlertCircle size={48} color="#94A3B8" />
-              <p style={{ marginTop: '12px', fontWeight: 700, fontSize: '1.1rem' }}>Нет загруженных картинок происшествий</p>
+        {/* ── Column 1: МИКРОТРАВМЫ ── */}
+        <div style={cardStyle}>
+          <div style={{ padding: '16px 20px 0 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <h2 style={cardTitleStyle}>МИКРОТРАВМЫ</h2>
+
+            {/* Red Count Badge */}
+            <div style={redBadgeStyle}>
+              <span style={{ fontSize: '2.4rem', fontWeight: 900, lineHeight: 1 }}>{countMicro}</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
-          ) : (
-            <div style={{
-              flex: 1, minHeight: 0, overflowY: 'auto',
-              display: 'grid', gridTemplateColumns: gridColumns, gap: '16px', paddingRight: '4px'
-            }}>
-              {incidents.map((item, idx) => {
-                const catObj = getItemCatObj(item);
 
-                return (
-                  <div
-                    key={item.id || idx}
-                    style={{
-                      background: 'rgba(255,255,255,0.65)', borderRadius: '14px',
-                      border: '1px solid rgba(255,255,255,0.8)',
-                      display: 'flex', flexDirection: 'column', overflow: 'hidden',
-                      boxShadow: '0 4px 16px rgba(0,0,0,0.06)', position: 'relative'
-                    }}
-                  >
-                    {/* Header bar on card */}
-                    <div style={{
-                      padding: '8px 14px', background: 'rgba(255,255,255,0.85)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                      borderBottom: '1px solid rgba(0,0,0,0.06)'
-                    }}>
-                      <span style={{
-                        fontSize: '0.78rem', fontWeight: 800, color: catObj.color,
-                        background: catObj.bg, padding: '3px 10px', borderRadius: '6px'
-                      }}>
-                        {item.category || catObj.name}
-                      </span>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748B' }}>
-                        {item.date_str}
-                      </span>
-                    </div>
-
-                    {/* Image Area */}
-                    <div
-                      onClick={() => setFullImage(item.image_path)}
-                      style={{
-                        flex: 1, minHeight: count <= 2 ? '380px' : '220px', background: '#FFFFFF',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        position: 'relative', cursor: 'pointer', padding: '8px'
-                      }}
-                    >
-                      <img
-                        src={item.image_path}
-                        alt={item.title || item.category}
-                        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                      />
-
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setFullImage(item.image_path); }}
-                        style={{
-                          position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(30, 41, 59, 0.85)',
-                          color: '#FFF', border: 'none', padding: '6px 12px',
-                          borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px',
-                          fontSize: '0.78rem', fontWeight: 600
-                        }}
-                      >
-                        <Maximize2 size={13} /> Открыть
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
+            {/* Notice Sheet Image View (No click / zoom) */}
+            <div style={imageBoxStyle}>
+              <img src={imgMicro} alt="Микротравмы" style={imageStyle} />
             </div>
-          )}
+          </div>
+
+          {/* Bottom Red-White Hazard Stripe */}
+          <div style={stripeStyle} />
         </div>
 
-        {/* ── Logo Column (Identical to Slide 1, 2, 3) ── */}
-        <div style={{
-          width: 'clamp(200px, 22vw, 320px)',
-          flexShrink: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '3vh',
-          overflow: 'hidden',
-        }}>
-          <img
-            src="/emblem_logo.png"
-            alt="MUSTAHKAM KELAJAK - AKKERMANN CEMENT"
-            style={{
-              width: 'clamp(160px, 18vw, 260px)',
-              height: 'clamp(160px, 18vw, 260px)',
-              objectFit: 'contain',
-              flexShrink: 0,
-            }}
-          />
-          <img
-            src="/akkermann_logo.png"
-            alt="AKKERMANN"
-            style={{
-              width: 'clamp(180px, 20vw, 280px)',
-              height: 'auto',
-              maxHeight: '8vh',
-              objectFit: 'contain',
-              flexShrink: 0,
-            }}
-          />
+        {/* ── Column 2: СТАТИСТИКА ПРОИСШЕСТВИЙ ── */}
+        <div style={cardStyle}>
+          <div style={{ padding: '16px 20px 0 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <h2 style={cardTitleStyle}>СТАТИСТИКА ПРОИСШЕСТВИЙ</h2>
+
+            {/* Red Count Badge */}
+            <div style={redBadgeStyle}>
+              <span style={{ fontSize: '2.4rem', fontWeight: 900, lineHeight: 1 }}>{countAccident}</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
+            </div>
+
+            {/* Notice Sheet Image View (No click / zoom) */}
+            <div style={imageBoxStyle}>
+              <img src={imgAccident} alt="Статистика происшествий" style={imageStyle} />
+            </div>
+          </div>
+
+          {/* Bottom Red-White Hazard Stripe */}
+          <div style={stripeStyle} />
+        </div>
+
+        {/* ── Column 3: ДТП, ПРОИСШЕСТВИЯ, ИНЦИДЕНТЫ ── */}
+        <div style={cardStyle}>
+          <div style={{ padding: '16px 20px 0 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <h2 style={cardTitleStyle}>ДТП, ПРОИСШЕСТВИЯ, ИНЦИДЕНТЫ</h2>
+
+            {/* Red Count Badge */}
+            <div style={redBadgeStyle}>
+              <span style={{ fontSize: '2.4rem', fontWeight: 900, lineHeight: 1 }}>{countDtp}</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
+            </div>
+
+            {/* Notice Sheet Image View (No click / zoom) */}
+            <div style={imageBoxStyle}>
+              <img src={imgDtp} alt="ДТП, происшествия, инциденты" style={imageStyle} />
+            </div>
+          </div>
+
+          {/* Bottom Red-White Hazard Stripe */}
+          <div style={stripeStyle} />
         </div>
       </div>
 
-      {/* Lightbox / Fullscreen Image Viewer */}
-      {fullImage && (
-        <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(3, 7, 18, 0.92)', zIndex: 1000,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '30px'
-        }}>
-          <button
-            onClick={() => setFullImage(null)}
-            style={{
-              position: 'absolute', top: '24px', right: '24px', background: 'rgba(255,255,255,0.2)',
-              color: '#FFF', border: 'none', width: '44px', height: '44px', borderRadius: '50%',
-              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
-            }}
-          >
-            <X size={26} />
-          </button>
-          <img
-            src={fullImage}
-            alt="Fullscreen view"
-            style={{ maxWidth: '95vw', maxHeight: '92vh', objectFit: 'contain', borderRadius: '8px', boxShadow: '0 0 50px rgba(0,0,0,0.8)' }}
-          />
-        </div>
-      )}
+      {/* ── Footer ── */}
+      <div style={{
+        textAlign: 'center',
+        fontSize: '0.85rem',
+        color: '#64748B',
+        fontWeight: 600,
+        marginTop: '1.2vh',
+        flexShrink: 0,
+      }}>
+        Все данные актуальны на {displayDate}
+      </div>
     </div>
   );
 }
+
+// ── Shared Card Styles ──
+const cardStyle = {
+  background: '#FFFFFF',
+  borderRadius: '16px',
+  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.07)',
+  border: '1px solid #E2E8F0',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  overflow: 'hidden',
+  minHeight: 0,
+};
+
+const cardTitleStyle = {
+  fontSize: 'clamp(0.95rem, 1.2vw, 1.25rem)',
+  fontWeight: 900,
+  color: '#1E293B',
+  margin: '0 0 12px 0',
+  textAlign: 'center',
+  letterSpacing: '0.3px',
+  fontFamily: "'Inter', system-ui, sans-serif",
+};
+
+const redBadgeStyle = {
+  background: '#E53935',
+  color: '#FFFFFF',
+  borderRadius: '12px',
+  padding: '10px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: '14px',
+  boxShadow: '0 4px 12px rgba(229, 57, 53, 0.25)',
+  flexShrink: 0,
+};
+
+const imageBoxStyle = {
+  flex: 1,
+  background: '#F8FAFC',
+  borderRadius: '8px',
+  border: '1px solid #E2E8F0',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  overflow: 'hidden',
+  padding: '6px',
+  minHeight: 0,
+};
+
+const imageStyle = {
+  maxWidth: '100%',
+  maxHeight: '100%',
+  objectFit: 'contain',
+};
+
+const stripeStyle = {
+  height: '14px',
+  width: '100%',
+  flexShrink: 0,
+  background: 'repeating-linear-gradient(-45deg, #DC2626, #DC2626 12px, #FFFFFF 12px, #FFFFFF 24px)',
+};
