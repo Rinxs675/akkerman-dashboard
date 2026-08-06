@@ -43,7 +43,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-      padding: '2vh 3vw',
+      padding: 'clamp(56px, 7.5vh, 80px) 3vw 1.5vh 3vw',
       boxSizing: 'border-box',
       overflow: 'hidden',
     }}>

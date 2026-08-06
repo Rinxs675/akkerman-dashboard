@@ -43,7 +43,7 @@ export default function SlideNews({ news = [], reportDate }) {
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      padding: '3vh 4vw 3vh 4vw',
+      padding: 'clamp(56px, 7.5vh, 80px) 3vw 2vh 3vw',
       boxSizing: 'border-box',
       overflow: 'hidden',
     }}>

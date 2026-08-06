@@ -18,7 +18,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
       display: 'flex',
       flexDirection: 'column',
       fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      padding: '3vh 4vw 3vh 4vw',
+      padding: 'clamp(56px, 7.5vh, 80px) 3vw 2vh 3vw',
       boxSizing: 'border-box',
       overflow: 'hidden',
     }}>
@@ -27,21 +27,21 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        marginBottom: '2vh',
+        marginBottom: '1.5vh',
         flexShrink: 0,
       }}>
         <span style={{
-          fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)',
+          fontSize: 'clamp(1.2rem, 2vw, 2rem)',
           fontWeight: 900,
           color: '#1E293B',
-          minWidth: '110px',
+          minWidth: '90px',
           flexShrink: 0,
         }}>
           {label}
         </span>
         <span style={{
           flex: 1,
-          fontSize: 'clamp(1.8rem, 3.2vw, 3rem)',
+          fontSize: 'clamp(1.4rem, 2.5vw, 2.5rem)',
           fontWeight: 800,
           color: '#1A2B48',
           textAlign: 'center',
@@ -50,10 +50,10 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
           {title}
         </span>
         <span style={{
-          fontSize: 'clamp(1.1rem, 1.6vw, 1.5rem)',
+          fontSize: 'clamp(0.9rem, 1.3vw, 1.3rem)',
           fontWeight: 600,
           color: '#475569',
-          minWidth: '220px',
+          minWidth: '180px',
           textAlign: 'right',
           flexShrink: 0,
         }}>
@@ -65,7 +65,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
       <div style={{
         flex: 1,
         display: 'flex',
-        gap: '3vw',
+        gap: '2vw',
         minHeight: 0,
         overflow: 'hidden',
       }}>
@@ -75,7 +75,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          gap: '2vh',
+          gap: '1.5vh',
           minHeight: 0,
           overflow: 'hidden',
         }}>
@@ -86,7 +86,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
             background: 'rgba(255,255,255,0.45)',
             borderRadius: '12px',
             overflow: 'hidden',
-            padding: '1.2vh 1.5vw 1vh 1vw',
+            padding: '1vh 1.2vw 0.8vh 1vw',
             minHeight: 0,
             display: 'flex',
             flexDirection: 'column',
@@ -107,7 +107,7 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
             background: 'rgba(255,255,255,0.45)',
             borderRadius: '12px',
             overflow: 'hidden',
-            padding: '1.2vh 1.5vw 1vh 1vw',
+            padding: '1vh 1.2vw 0.8vh 1vw',
             minHeight: 0,
             display: 'flex',
             flexDirection: 'column',
@@ -126,13 +126,13 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
 
         {/* ── Logo column ── */}
         <div style={{
-          width: 'clamp(200px, 22vw, 320px)',
+          width: 'clamp(150px, 18vw, 260px)',
           flexShrink: 0,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '3vh',
+          gap: '2vh',
           overflow: 'hidden',
         }}>
           {/* Round Emblem Badge */}
@@ -140,8 +140,8 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
             src="/emblem_logo.png"
             alt="MUSTAHKAM KELAJAK - AKKERMANN CEMENT"
             style={{
-              width: 'clamp(160px, 18vw, 260px)',
-              height: 'clamp(160px, 18vw, 260px)',
+              width: 'clamp(120px, 14vw, 200px)',
+              height: 'clamp(120px, 14vw, 200px)',
               objectFit: 'contain',
               flexShrink: 0,
             }}
@@ -152,9 +152,9 @@ function SlideTemplate({ label, title, daily = {}, monthly = {}, reportDate }) {
             src="/akkermann_logo.png"
             alt="AKKERMANN"
             style={{
-              width: 'clamp(180px, 20vw, 280px)',
+              width: 'clamp(140px, 16vw, 220px)',
               height: 'auto',
-              maxHeight: '8vh',
+              maxHeight: '7vh',
               objectFit: 'contain',
               flexShrink: 0,
             }}
