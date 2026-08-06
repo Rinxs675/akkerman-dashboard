@@ -100,7 +100,7 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       </div>
 
       {/* ── 3 Column Cards Body ── */}
-      <div style={{
+      <div className="responsive-grid-3col" style={{
         flex: 1,
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
@@ -110,13 +110,13 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
       }}>
         {/* ── Column 1: МИКРОТРАВМЫ ── */}
         <div style={cardStyle}>
-          <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 14px 6px 14px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>МИКРОТРАВМЫ</h2>
 
             {/* Dark Blue Count Badge */}
             <div style={darkBlueBadgeStyle}>
-              <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countMicro}</span>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
+              <span style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.6rem)', fontWeight: 900, lineHeight: 1 }}>{countMicro}</span>
+              <span style={{ fontSize: 'clamp(0.7rem, 0.9vw, 0.9rem)', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
 
             {/* Full Image Container */}
@@ -131,13 +131,13 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
 
         {/* ── Column 2: НЕСЧАСТНЫЕ СЛУЧАИ ── */}
         <div style={cardStyle}>
-          <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 14px 6px 14px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>НЕСЧАСТНЫЕ СЛУЧАИ</h2>
 
             {/* Dark Blue Count Badge */}
             <div style={darkBlueBadgeStyle}>
-              <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countAccident}</span>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
+              <span style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.6rem)', fontWeight: 900, lineHeight: 1 }}>{countAccident}</span>
+              <span style={{ fontSize: 'clamp(0.7rem, 0.9vw, 0.9rem)', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
 
             {/* Full Image Container */}
@@ -152,13 +152,13 @@ export default function SlideAccidents({ data, incidents = [], reportDate }) {
 
         {/* ── Column 3: ДТП, ПРОИСШЕСТВИЯ, ИНЦИДЕНТЫ ── */}
         <div style={cardStyle}>
-          <div style={{ padding: '14px 16px 8px 16px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 14px 6px 14px', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
             <h2 style={cardTitleStyle}>ДТП, ПРОИСШЕСТВИЯ, ИНЦИДЕНТЫ</h2>
 
             {/* Dark Blue Count Badge */}
             <div style={darkBlueBadgeStyle}>
-              <span style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1 }}>{countDtp}</span>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
+              <span style={{ fontSize: 'clamp(1.6rem, 2.5vw, 2.6rem)', fontWeight: 900, lineHeight: 1 }}>{countDtp}</span>
+              <span style={{ fontSize: 'clamp(0.7rem, 0.9vw, 0.9rem)', fontWeight: 700, marginTop: '2px' }}>происшествий</span>
             </div>
 
             {/* Full Image Container */}

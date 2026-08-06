@@ -1,17 +1,53 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #030712;
-  color: #0F172A;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
+html, body, #root {
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0B0F19;
+  color: #0F172A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
+  position: relative;
+}
+
+/* ── 4K & Ultra HD TVs / Large Displays (3840x2160, 2560x1440) ── */
+@media (min-width: 2500px) {
+  html {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 3800px) {
+  html {
+    font-size: 32px;
+  }
+}
+
+/* ── Laptops & Small Height Screens (e.g. 1366x768, 1440x900) ── */
+@media (max-height: 800px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* ── Vertical / Portrait Kiosks & Mobile (e.g. 1024x1366, Tablets) ── */
+@media (max-aspect-ratio: 1/1) {
+  .responsive-grid-3col {
+    grid-template-columns: 1fr !important;
+    overflow-y: auto !important;
+  }
 }
