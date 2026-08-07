@@ -149,6 +149,7 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
+          width: '100%', // <-- FIX: Set to 100% so the inner child can resolve its percentage width
         }}>
           <div style={{
             width: `${Math.max(getWidthPct(Math.abs(dev)), 0.5)}%`,
