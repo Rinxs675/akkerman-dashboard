@@ -141,23 +141,27 @@ export default function HorizontalBarChart({ title, plan, fact, dev }) {
         {/* Zero vertical guide line */}
         <div style={{ position: 'absolute', left: 0, top: '5%', bottom: '5%', width: '2px', background: '#64748B', zIndex: 2 }} />
 
+        {/* Deviation bar */}
         <div style={{
           position: 'absolute',
           left: 0,
           top: '15%',
           bottom: '15%',
+          width: `${Math.max(getWidthPct(Math.abs(dev)), 0.5)}%`,
+          background: isNegative ? '#DC2626' : '#5D9E53',
+          borderRadius: '2px',
+          minWidth: '8px',
+        }} />
+
+        {/* Deviation text */}
+        <div style={{
+          position: 'absolute',
+          left: `calc(${Math.max(getWidthPct(Math.abs(dev)), 0.5)}% + 8px)`,
+          top: '15%',
+          bottom: '15%',
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          width: '100%', // <-- FIX: Set to 100% so the inner child can resolve its percentage width
         }}>
-          <div style={{
-            width: `${Math.max(getWidthPct(Math.abs(dev)), 0.5)}%`,
-            height: '100%',
-            background: isNegative ? '#DC2626' : '#5D9E53',
-            borderRadius: '2px',
-            minWidth: '8px',
-          }} />
           <span style={{
             color: isNegative ? '#DC2626' : '#15803D',
             fontWeight: 800,
