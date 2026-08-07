@@ -19,10 +19,21 @@ export default function HeaderNav({
 
   // Hover detection timeout
   const leaveTimeoutRef = useRef(null);
+  
+  // Cleanup timeout on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (leaveTimeoutRef.current) {
+        clearTimeout(leaveTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleMouseEnter = () => {
     if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current);
     setIsHovered(true);
   };
+  
   const handleMouseLeave = () => {
     leaveTimeoutRef.current = setTimeout(() => {
       setIsHovered(false);

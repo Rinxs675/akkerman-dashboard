@@ -159,6 +159,7 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
     e.preventDefault();
     if (!file) return alert('Пожалуйста, выберите картинку происшествия');
 
+    setLoading(true);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('category', category);
@@ -175,6 +176,8 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
       }
     } catch (e) {
       console.error('Error uploading incident:', e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -253,8 +256,8 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
               <input style={inputStyle} value={title} onChange={e => setTitle(e.target.value)} placeholder="Например: Уведомление №7" />
             </div>
 
-            <button type="submit" style={{ width: '100%', background: '#10B981', color: '#FFF', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 800, fontSize: '0.95rem', cursor: 'pointer', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)' }}>
-              Загрузить в слайд происшествий
+            <button type="submit" disabled={loading} style={{ width: '100%', background: loading ? '#64748B' : '#10B981', color: '#FFF', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 800, fontSize: '0.95rem', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)' }}>
+              {loading ? 'Идет загрузка...' : 'Загрузить в слайд происшествий'}
             </button>
           </form>
 
@@ -322,6 +325,7 @@ export function NewsModal({ isOpen, onClose, onRefresh }) {
     e.preventDefault();
     if (!file) return alert('Выберите картинку для новости');
 
+    setLoading(true);
     const formData = new FormData();
     formData.append('image', file);
     formData.append('title', title);
@@ -338,6 +342,8 @@ export function NewsModal({ isOpen, onClose, onRefresh }) {
       }
     } catch (e) {
       console.error('Error uploading news:', e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -398,8 +404,8 @@ export function NewsModal({ isOpen, onClose, onRefresh }) {
                 <label style={labelStyle}>Картинка баннера новости (PNG, JPG, SVG)</label>
                 <input type="file" accept="image/*" onChange={e => setFile(e.target.files[0])} required style={{ color: '#94A3B8', fontSize: '0.85rem' }} />
               </div>
-              <button type="submit" style={{ background: '#38BDF8', color: '#0F172A', border: 'none', padding: '8px 18px', borderRadius: '8px', fontWeight: 800, cursor: 'pointer' }}>
-                Опубликовать
+              <button type="submit" disabled={loading} style={{ background: loading ? '#475569' : '#38BDF8', color: loading ? '#94A3B8' : '#0F172A', border: 'none', padding: '8px 18px', borderRadius: '8px', fontWeight: 800, cursor: loading ? 'not-allowed' : 'pointer' }}>
+                {loading ? 'Отправка...' : 'Опубликовать'}
               </button>
             </div>
           </form>
