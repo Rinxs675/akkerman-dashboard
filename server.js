@@ -6,15 +6,37 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { initDatabase, dbRun, dbAll, dbGet } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+// Security Headers
+app.use(helmet({
+  crossOriginResourcePolicy: false, // Allow serving static images across origins if needed
+}));
+
+// Rate Limiting Config
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // Global limit for all routes
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 50, // Stricter limit for uploads/deletions (50 per 15 min)
+  message: { error: 'Слишком много запросов. Пожалуйста, подождите.' }
+});
+
+app.use(globalLimiter);
 app.use(cors());
-app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ extended: true, limit: '100mb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -36,18 +58,27 @@ const NEWS_DIR = path.join(UPLOADS_DIR, 'news');
 app.use('/uploads', express.static(UPLOADS_DIR));
 app.use('/samples', express.static(path.join(__dirname, 'public', 'samples')));
 
-// Multer storage configs
+// Secure Multer image filter and limits
+const imageFilter = (req, file, cb) => {
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Недопустимый формат. Разрешены только изображения (JPEG, PNG, WEBP, SVG).'), false);
+  }
+};
+
 const storageIncident = multer.diskStorage({
   destination: (req, file, cb) => cb(null, INCIDENTS_DIR),
   filename: (req, file, cb) => cb(null, `incident_${Date.now()}_${path.basename(file.originalname)}`)
 });
-const uploadIncident = multer({ storage: storageIncident });
+const uploadIncident = multer({ storage: storageIncident, fileFilter: imageFilter, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit
 
 const storageNews = multer.diskStorage({
   destination: (req, file, cb) => cb(null, NEWS_DIR),
   filename: (req, file, cb) => cb(null, `news_${Date.now()}_${path.basename(file.originalname)}`)
 });
-const uploadNews = multer({ storage: storageNews });
+const uploadNews = multer({ storage: storageNews, fileFilter: imageFilter, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB limit
 
 const storageExcel = multer.diskStorage({
   destination: (req, file, cb) => cb(null, EXCEL_DIR),
@@ -123,7 +154,7 @@ app.get('/api/latest-excel', async (req, res) => {
 // Get Excel History from DB
 app.get('/api/excel-history', async (req, res) => {
   try {
-    const files = await dbAll(`SELECT id, filename, original_name, file_size, uploaded_at, is_active FROM excel_files ORDER BY id DESC`);
+    const files = await dbAll(`SELECT id, filename, original_name, file_size, uploaded_at, is_active FROM excel_files ORDER BY id DESC LIMIT 100`);
     res.json(files);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -153,7 +184,7 @@ app.post('/api/excel-select/:id', async (req, res) => {
 });
 
 // Delete Excel file from DB
-app.delete('/api/excel-file/:id', async (req, res) => {
+app.delete('/api/excel-file/:id', apiLimiter, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM excel_files WHERE id = ?`, [id]);
@@ -170,7 +201,7 @@ app.delete('/api/excel-file/:id', async (req, res) => {
 });
 
 // Upload Excel file (REST endpoint supporting both Raw Binary and Multipart)
-app.post('/api/upload', express.raw({ type: '*/*', limit: '100mb' }), async (req, res) => {
+app.post('/api/upload', apiLimiter, express.raw({ type: '*/*', limit: '50mb' }), async (req, res) => {
   try {
     const fileBuf = req.body;
     if (!fileBuf || !fileBuf.length) {
@@ -211,7 +242,7 @@ app.post('/api/upload', express.raw({ type: '*/*', limit: '100mb' }), async (req
 // Get all incidents
 app.get('/api/incidents', async (req, res) => {
   try {
-    const rows = await dbAll(`SELECT * FROM incidents ORDER BY id DESC`);
+    const rows = await dbAll(`SELECT * FROM incidents ORDER BY id DESC LIMIT 100`);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -219,7 +250,7 @@ app.get('/api/incidents', async (req, res) => {
 });
 
 // Upload incident notification image
-app.post('/api/incidents', uploadIncident.single('image'), async (req, res) => {
+app.post('/api/incidents', apiLimiter, uploadIncident.single('image'), async (req, res) => {
   try {
     const { title, number, category, date_str, location, description, count } = req.body;
     if (!req.file) {
@@ -252,7 +283,7 @@ app.post('/api/incidents', uploadIncident.single('image'), async (req, res) => {
 });
 
 // Delete incident
-app.delete('/api/incidents/:id', async (req, res) => {
+app.delete('/api/incidents/:id', apiLimiter, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM incidents WHERE id = ?`, [id]);
@@ -277,7 +308,7 @@ app.delete('/api/incidents/:id', async (req, res) => {
 // Get all news
 app.get('/api/news', async (req, res) => {
   try {
-    const rows = await dbAll(`SELECT * FROM news ORDER BY id DESC`);
+    const rows = await dbAll(`SELECT * FROM news ORDER BY id DESC LIMIT 100`);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -287,7 +318,7 @@ app.get('/api/news', async (req, res) => {
 // Get active news (current time between start_date and end_date)
 app.get('/api/news/active', async (req, res) => {
   try {
-    const rows = await dbAll(`SELECT * FROM news ORDER BY id DESC`);
+    const rows = await dbAll(`SELECT * FROM news ORDER BY id DESC LIMIT 100`);
     const now = new Date();
     const activeRows = rows.filter(item => {
       const start = new Date(item.start_date);
@@ -301,7 +332,7 @@ app.get('/api/news/active', async (req, res) => {
 });
 
 // Upload news item
-app.post('/api/news', uploadNews.single('image'), async (req, res) => {
+app.post('/api/news', apiLimiter, uploadNews.single('image'), async (req, res) => {
   try {
     const { title, description, start_date, end_date } = req.body;
     if (!req.file) {
@@ -326,7 +357,7 @@ app.post('/api/news', uploadNews.single('image'), async (req, res) => {
 });
 
 // Delete news item
-app.delete('/api/news/:id', async (req, res) => {
+app.delete('/api/news/:id', apiLimiter, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM news WHERE id = ?`, [id]);
