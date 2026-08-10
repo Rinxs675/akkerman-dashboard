@@ -2,8 +2,10 @@ import React from 'react';
 import { formatNumber } from '../utils/excelParser';
 
 export default function HorizontalBarChart({ title, plan, fact, dev }) {
-  // Determine upper scaling bound (e.g. max of plan and fact)
-  const maxVal = Math.max(plan, fact, 100);
+  // Determine upper scaling bound. Add 25% padding (multiply by 1.25) 
+  // so the max bar is 80% wide, leaving 20% room for the text label to prevent overflow.
+  const rawMax = Math.max(plan, fact, 100);
+  const maxVal = rawMax * 1.25;
   
   // Calculate width percentage relative to maxVal
   const getWidthPct = (val) => {
