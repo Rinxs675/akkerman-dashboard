@@ -117,11 +117,13 @@ class SyncManager {
 
     try {
       console.log('[SyncManager] Uploading Excel file to server via REST:', uploadUrl);
+      const token = localStorage.getItem('adminToken') || '';
       const response = await fetch(uploadUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/octet-stream',
-          'X-File-Name': encodeURIComponent(fileName)
+          'X-File-Name': encodeURIComponent(fileName),
+          'Authorization': `Bearer ${token}`
         },
         body: arrayBuffer
       });

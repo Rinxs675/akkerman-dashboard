@@ -26,7 +26,11 @@ export function ExcelHistoryModal({ isOpen, onClose, onSelectFile, activeFileNam
 
   const handleSelect = async (id) => {
     try {
-      const res = await fetch(`/api/excel-select/${id}`, { method: 'POST' });
+      const token = localStorage.getItem('adminToken') || '';
+      const res = await fetch(`/api/excel-select/${id}`, { 
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) {
         await fetchHistory();
         onSelectFile();
@@ -39,7 +43,11 @@ export function ExcelHistoryModal({ isOpen, onClose, onSelectFile, activeFileNam
   const handleDelete = async (id) => {
     if (!window.confirm('Удалить этот файл из базы данных?')) return;
     try {
-      await fetch(`/api/excel-file/${id}`, { method: 'DELETE' });
+      const token = localStorage.getItem('adminToken') || '';
+      await fetch(`/api/excel-file/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       fetchHistory();
     } catch (e) {
       console.error('Failed to delete file:', e);
@@ -168,7 +176,12 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
     formData.append('date_str', new Date().toLocaleString('ru-RU'));
 
     try {
-      const res = await fetch('/api/incidents', { method: 'POST', body: formData });
+      const token = localStorage.getItem('adminToken') || '';
+      const res = await fetch('/api/incidents', { 
+        method: 'POST', 
+        body: formData,
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) {
         setTitle(''); setFile(null); setCount('1');
         await fetchIncidents();
@@ -184,7 +197,11 @@ export function IncidentsModal({ isOpen, onClose, onRefresh }) {
   const handleDelete = async (id) => {
     if (!window.confirm('Удалить эту картинку происшествия?')) return;
     try {
-      await fetch(`/api/incidents/${id}`, { method: 'DELETE' });
+      const token = localStorage.getItem('adminToken') || '';
+      await fetch(`/api/incidents/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       await fetchIncidents();
       onRefresh && onRefresh();
     } catch (e) {
@@ -334,7 +351,12 @@ export function NewsModal({ isOpen, onClose, onRefresh }) {
     formData.append('end_date', endDate ? new Date(endDate).toISOString() : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString());
 
     try {
-      const res = await fetch('/api/news', { method: 'POST', body: formData });
+      const token = localStorage.getItem('adminToken') || '';
+      const res = await fetch('/api/news', { 
+        method: 'POST', 
+        body: formData,
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) {
         setTitle(''); setDescription(''); setFile(null);
         await fetchNews();
@@ -350,7 +372,11 @@ export function NewsModal({ isOpen, onClose, onRefresh }) {
   const handleDelete = async (id) => {
     if (!window.confirm('Удалить эту новость?')) return;
     try {
-      await fetch(`/api/news/${id}`, { method: 'DELETE' });
+      const token = localStorage.getItem('adminToken') || '';
+      await fetch(`/api/news/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       await fetchNews();
       onRefresh && onRefresh();
     } catch (e) {

@@ -8,10 +8,14 @@ import { fileURLToPath } from 'url';
 import multer from 'multer';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import jwt from 'jsonwebtoken';
 import { initDatabase, dbRun, dbAll, dbGet } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'akkermann2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'akkermann_super_secret_key_2026';
 
 const app = express();
 
@@ -130,6 +134,32 @@ app.get('/api/status', (req, res) => {
   });
 });
 
+// Admin Auth Middleware
+const authenticateAdmin = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Необходима авторизация' });
+  }
+  const token = authHeader.split(' ')[1];
+  try {
+    jwt.verify(token, JWT_SECRET);
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Токен недействителен или истек' });
+  }
+};
+
+// Login Endpoint
+app.post('/api/login', apiLimiter, (req, res) => {
+  const { password } = req.body;
+  if (password === ADMIN_PASSWORD) {
+    const token = jwt.sign({ role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
+    res.json({ success: true, token });
+  } else {
+    res.status(401).json({ error: 'Неверный пароль' });
+  }
+});
+
 // Download/Fetch current active excel file
 app.get('/api/latest-excel', async (req, res) => {
   try {
@@ -162,7 +192,7 @@ app.get('/api/excel-history', async (req, res) => {
 });
 
 // Select active Excel file from DB
-app.post('/api/excel-select/:id', async (req, res) => {
+app.post('/api/excel-select/:id', authenticateAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM excel_files WHERE id = ?`, [id]);
@@ -184,7 +214,7 @@ app.post('/api/excel-select/:id', async (req, res) => {
 });
 
 // Delete Excel file from DB
-app.delete('/api/excel-file/:id', apiLimiter, async (req, res) => {
+app.delete('/api/excel-file/:id', apiLimiter, authenticateAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM excel_files WHERE id = ?`, [id]);
@@ -201,7 +231,7 @@ app.delete('/api/excel-file/:id', apiLimiter, async (req, res) => {
 });
 
 // Upload Excel file (REST endpoint supporting both Raw Binary and Multipart)
-app.post('/api/upload', apiLimiter, express.raw({ type: '*/*', limit: '50mb' }), async (req, res) => {
+app.post('/api/upload', apiLimiter, authenticateAdmin, express.raw({ type: '*/*', limit: '50mb' }), async (req, res) => {
   try {
     const fileBuf = req.body;
     if (!fileBuf || !fileBuf.length) {
@@ -250,7 +280,7 @@ app.get('/api/incidents', async (req, res) => {
 });
 
 // Upload incident notification image
-app.post('/api/incidents', apiLimiter, uploadIncident.single('image'), async (req, res) => {
+app.post('/api/incidents', apiLimiter, authenticateAdmin, uploadIncident.single('image'), async (req, res) => {
   try {
     const { title, number, category, date_str, location, description, count } = req.body;
     if (!req.file) {
@@ -283,7 +313,7 @@ app.post('/api/incidents', apiLimiter, uploadIncident.single('image'), async (re
 });
 
 // Delete incident
-app.delete('/api/incidents/:id', apiLimiter, async (req, res) => {
+app.delete('/api/incidents/:id', apiLimiter, authenticateAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM incidents WHERE id = ?`, [id]);
@@ -332,7 +362,7 @@ app.get('/api/news/active', async (req, res) => {
 });
 
 // Upload news item
-app.post('/api/news', apiLimiter, uploadNews.single('image'), async (req, res) => {
+app.post('/api/news', apiLimiter, authenticateAdmin, uploadNews.single('image'), async (req, res) => {
   try {
     const { title, description, start_date, end_date } = req.body;
     if (!req.file) {
@@ -357,7 +387,7 @@ app.post('/api/news', apiLimiter, uploadNews.single('image'), async (req, res) =
 });
 
 // Delete news item
-app.delete('/api/news/:id', apiLimiter, async (req, res) => {
+app.delete('/api/news/:id', apiLimiter, authenticateAdmin, async (req, res) => {
   try {
     const id = req.params.id;
     const target = await dbGet(`SELECT * FROM news WHERE id = ?`, [id]);

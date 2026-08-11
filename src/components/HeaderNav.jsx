@@ -3,7 +3,7 @@ import { Upload, Play, Pause, Maximize2, FileSpreadsheet, Wifi, WifiOff, ShieldA
 import { ExcelHistoryModal, IncidentsModal, NewsModal } from './ManagementModals';
 
 export default function HeaderNav({
-  availableSheets, activeSheet, onSelectSheet,
+  isAdmin, availableSheets, activeSheet, onSelectSheet,
   onFileUpload, isPlaying, onTogglePlay, onToggleFullscreen,
   currentSlide, totalSlides, fileName, syncStatus, onRefreshAll
 }) {
@@ -127,77 +127,100 @@ export default function HeaderNav({
         </div>
 
         {/* Center: Slide Management Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* Excel DB Button */}
-          <button
-            onClick={() => setModalExcelOpen(true)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: 'rgba(30, 41, 59, 0.8)', color: '#38BDF8',
-              border: '1px solid rgba(56, 189, 248, 0.3)', fontWeight: 600,
-              fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
-              cursor: 'pointer', height: '34px',
-            }}
-            title="Просмотреть историю загруженных Excel файлов в БД"
-          >
-            <Database size={14} /> База Excel
-          </button>
+        {isAdmin && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* Excel DB Button */}
+            <button
+              onClick={() => setModalExcelOpen(true)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: 'rgba(30, 41, 59, 0.8)', color: '#38BDF8',
+                border: '1px solid rgba(56, 189, 248, 0.3)', fontWeight: 600,
+                fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
+                cursor: 'pointer', height: '34px',
+              }}
+              title="Просмотреть историю загруженных Excel файлов в БД"
+            >
+              <Database size={14} /> База Excel
+            </button>
 
-          {/* Accidents Button */}
-          <button
-            onClick={() => setModalIncidentsOpen(true)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: 'rgba(239, 68, 68, 0.15)', color: '#FCA5A5',
-              border: '1px solid rgba(239, 68, 68, 0.3)', fontWeight: 600,
-              fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
-              cursor: 'pointer', height: '34px',
-            }}
-            title="Управление бланками и карточками происшествий"
-          >
-            <ShieldAlert size={14} /> Происшествия
-          </button>
+            {/* Accidents Button */}
+            <button
+              onClick={() => setModalIncidentsOpen(true)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: 'rgba(239, 68, 68, 0.15)', color: '#FCA5A5',
+                border: '1px solid rgba(239, 68, 68, 0.3)', fontWeight: 600,
+                fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
+                cursor: 'pointer', height: '34px',
+              }}
+              title="Управление бланками и карточками происшествий"
+            >
+              <ShieldAlert size={14} /> Происшествия
+            </button>
 
-          {/* News Button */}
-          <button
-            onClick={() => setModalNewsOpen(true)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: 'rgba(16, 185, 129, 0.15)', color: '#34D399',
-              border: '1px solid rgba(16, 185, 129, 0.3)', fontWeight: 600,
-              fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
-              cursor: 'pointer', height: '34px',
-            }}
-            title="Загрузка новостей с ограниченным сроком показа"
-          >
-            <Newspaper size={14} /> Новости (Таймер)
-          </button>
-        </div>
+            {/* News Button */}
+            <button
+              onClick={() => setModalNewsOpen(true)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: 'rgba(16, 185, 129, 0.15)', color: '#34D399',
+                border: '1px solid rgba(16, 185, 129, 0.3)', fontWeight: 600,
+                fontSize: '0.78rem', padding: '6px 12px', borderRadius: '6px',
+                cursor: 'pointer', height: '34px',
+              }}
+              title="Загрузка новостей с ограниченным сроком показа"
+            >
+              <Newspaper size={14} /> Новости (Таймер)
+            </button>
+          </div>
+        )}
 
         {/* Right Side: Primary Controls & Fullscreen */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* Hidden File Input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept=".xlsx,.xls"
-            onChange={e => e.target.files[0] && onFileUpload(e.target.files[0])}
-            style={{ display: 'none' }}
-          />
+          {isAdmin && (
+            <>
+              {/* Hidden File Input */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept=".xlsx,.xls"
+                onChange={e => e.target.files[0] && onFileUpload(e.target.files[0])}
+                style={{ display: 'none' }}
+              />
 
-          {/* Upload Button */}
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: '#10B981', color: '#fff', fontWeight: 600,
-              fontSize: '0.8rem', padding: '6px 14px', borderRadius: '6px',
-              border: 'none', cursor: 'pointer', height: '34px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-            }}
-          >
-            <Upload size={14} /> Загрузить Excel
-          </button>
+              {/* Upload Button */}
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  background: '#10B981', color: '#fff', fontWeight: 600,
+                  fontSize: '0.8rem', padding: '6px 14px', borderRadius: '6px',
+                  border: 'none', cursor: 'pointer', height: '34px',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                }}
+              >
+                <Upload size={14} /> Загрузить Excel
+              </button>
+
+              {/* Logout Button */}
+              <button
+                onClick={() => {
+                  localStorage.removeItem('adminToken');
+                  window.location.href = '/';
+                }}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  background: 'rgba(239, 68, 68, 0.15)', color: '#FCA5A5',
+                  border: '1px solid rgba(239, 68, 68, 0.3)', fontWeight: 600,
+                  fontSize: '0.8rem', padding: '6px 14px', borderRadius: '6px',
+                  cursor: 'pointer', height: '34px',
+                }}
+              >
+                Выход
+              </button>
+            </>
+          )}
 
           {/* Play/Pause Button */}
           <button
